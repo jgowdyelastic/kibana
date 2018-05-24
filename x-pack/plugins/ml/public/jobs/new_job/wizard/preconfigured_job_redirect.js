@@ -31,6 +31,7 @@ function getRedirectUrl(appState) {
     if (jobSettings.fields && jobSettings.fields.length) {
       if (jobSettings.fields.length > 1 || jobSettings.split !== undefined) {
         // multi-metric or population
+        // change this to look for split inside each field?
         if (jobSettings.population !== undefined) {
           page = 'population';
         } else {
