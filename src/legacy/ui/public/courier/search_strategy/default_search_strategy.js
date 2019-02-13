@@ -62,7 +62,7 @@ export const defaultSearchStrategy = {
     // Flatten the searchSource within each searchRequest to get the fetch params,
     // e.g. body, filters, index pattern, query.
     const allFetchParams = await getAllFetchParams(searchRequests, Promise);
-    languageIdentifierService.processFetchParams(allFetchParams);
+    await languageIdentifierService.processFetchParams(allFetchParams);
 
     // Serialize the fetch params into a format suitable for the body of an ES query.
     const {

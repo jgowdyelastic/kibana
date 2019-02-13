@@ -36,7 +36,8 @@ export class LanguageIdentifierPanel extends Component {
       text: '',
       lang: '',
       index: '',
-      langTitle: ','
+      langTitle: ',',
+      indexChanged: false,
     };
   }
 
@@ -44,8 +45,8 @@ export class LanguageIdentifierPanel extends Component {
     languageIdentifierService.setUpdatePanelFunction(this.setDetails);
   }
 
-  setDetails = (show, { text, lang, index, langTitle }) => {
-    this.setState({ show, text, lang, index, langTitle });
+  setDetails = (show, { text, lang, index, langTitle, indexChanged }) => {
+    this.setState({ show, text, lang, index, langTitle, indexChanged });
   }
 
   render() {
@@ -53,6 +54,7 @@ export class LanguageIdentifierPanel extends Component {
       show,
       index,
       langTitle,
+      indexChanged,
     } = this.state;
 
     if (show === false) {
@@ -65,9 +67,9 @@ export class LanguageIdentifierPanel extends Component {
           title={`${langTitle} text identified`}
           iconType="globe"
         >
-          <p>
-            Index has been changed to {index}
-          </p>
+          {indexChanged &&
+            <p>Index has been changed to {index}</p>
+          }
         </EuiCallOut>
         <EuiSpacer size="m" />
       </Fragment>

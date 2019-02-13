@@ -44,12 +44,16 @@ class LanguageIdentifierService {
       if (text) {
         const results = await this.getLanguage(text);
         console.log(results.langTitle);
-        if (results && results.index) {
+
+        let indexChanged = false;
+        if (results && results.index && allFetchParams[0].resolved.index !== results.index) {
           allFetchParams[0].resolved.index = results.index;
+          indexChanged = true;
+          console.log('New index', allFetchParams[0].resolved.index);
         }
+        this.updatePanel(true, { ...results, indexChanged });
       }
     }
-    console.log('New index', allFetchParams[0].resolved.index);
   }
 
   async getLanguage(text) {
@@ -61,7 +65,6 @@ class LanguageIdentifierService {
       },
     });
 
-    this.updatePanel(true, langDetails);
     return langDetails;
   }
 
