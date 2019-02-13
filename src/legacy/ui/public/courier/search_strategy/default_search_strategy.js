@@ -20,6 +20,7 @@
 import { addSearchStrategy } from './search_strategy_registry';
 import { isDefaultTypeIndexPattern } from './is_default_type_index_pattern';
 import { SearchError } from './search_error';
+import { languageIdentifierService } from '../../../../../legacy/core_plugins/language_identifier/public/language_identifier';
 
 function getAllFetchParams(searchRequests, Promise) {
   return Promise.map(searchRequests, (searchRequest) => {
@@ -61,6 +62,7 @@ export const defaultSearchStrategy = {
     // Flatten the searchSource within each searchRequest to get the fetch params,
     // e.g. body, filters, index pattern, query.
     const allFetchParams = await getAllFetchParams(searchRequests, Promise);
+    languageIdentifierService.processFetchParams(allFetchParams);
 
     // Serialize the fetch params into a format suitable for the body of an ES query.
     const {

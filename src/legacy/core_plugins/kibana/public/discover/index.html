@@ -70,6 +70,10 @@
 
       <div class="dscWrapper col-md-10">
         <div class="dscWrapper__content">
+          <div ng-show="resultState === 'ready'">
+            <language-identifier-panel />
+          </div>
+
           <discover-unsupported-index-pattern
             ng-if="isUnsupportedIndexPattern"
             unsupported-type="unsupportedIndexPatternType"
