@@ -19,16 +19,10 @@
 
 import { callWithRequestFactory } from '../client/call_with_request_factory';
 import { wrapError } from '../client/errors';
-
-const LANGS = {
-  en: 'English',
-  ko: 'Korean',
-  ja: 'Japanese',
-  zh: 'Chinese',
-};
+import { LANGUAGES } from './languages';
 
 function getLangTitle(lang) {
-  const l = LANGS[lang];
+  const l = LANGUAGES[lang];
   return l || '';
 }
 
