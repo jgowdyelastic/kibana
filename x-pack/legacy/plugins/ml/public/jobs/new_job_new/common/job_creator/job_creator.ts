@@ -284,6 +284,7 @@ export class JobCreator {
   }
 
   public set createdBy(createdBy: string | null) {
+    // TODO - turn this into a generic custom_settings function
     if (createdBy === null) {
       // if null is passed in, delete the created_by property
       if (
@@ -298,9 +299,14 @@ export class JobCreator {
         }
       }
     } else {
-      this._job_config.custom_settings = {
-        created_by: createdBy,
-      };
+      if (this._job_config.custom_settings === undefined) {
+        // if custom_settings doesn't exist, create it.
+        this._job_config.custom_settings = {
+          created_by: createdBy,
+        };
+      } else {
+        this._job_config.custom_settings.created_by = createdBy;
+      }
     }
   }
 
