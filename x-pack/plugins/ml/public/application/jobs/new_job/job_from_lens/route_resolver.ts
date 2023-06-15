@@ -12,9 +12,9 @@ import type { Filter } from '@kbn/es-query';
 import type { LensPublicStart, LensSavedObjectAttributes } from '@kbn/lens-plugin/public';
 import type { IUiSettingsClient } from '@kbn/core-ui-settings-browser';
 import type { TimefilterContract } from '@kbn/data-plugin/public';
-import type { SharePluginStart } from '@kbn/share-plugin/public';
 import type { ContentManagementPublicStart } from '@kbn/content-management-plugin/public';
 import type { LensGetIn, LensGetOut } from '@kbn/lens-plugin/common/content_management/v1';
+import type { DashboardStart } from '@kbn/dashboard-plugin/public';
 import { QuickLensJobCreator } from './quick_create_job';
 import type { MlApiServices } from '../../../services/ml_api_service';
 
@@ -26,14 +26,14 @@ export async function resolver(
     lens,
     kibanaConfig,
     timeFilter,
-    share,
+    dashboardService,
     mlApiServices,
   }: {
     contentManagement: ContentManagementPublicStart;
     lens: LensPublicStart;
     kibanaConfig: IUiSettingsClient;
     timeFilter: TimefilterContract;
-    share: SharePluginStart;
+    dashboardService: DashboardStart;
     mlApiServices: MlApiServices;
   },
 
@@ -102,6 +102,12 @@ export async function resolver(
     layerIndex = undefined;
   }
 
-  const jobCreator = new QuickLensJobCreator(lens, kibanaConfig, timeFilter, share, mlApiServices);
+  const jobCreator = new QuickLensJobCreator(
+    lens,
+    kibanaConfig,
+    timeFilter,
+    dashboardService,
+    mlApiServices
+  );
   await jobCreator.createAndStashADJob(vis, from, to, query, filters, layerIndex);
 }

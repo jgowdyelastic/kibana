@@ -34,7 +34,7 @@ const PageWrapper: FC<PageProps> = ({ location }) => {
           timefilter: { timefilter: timeFilter },
         },
       },
-      share,
+      dashboard: dashboardService,
       uiSettings: kibanaConfig,
       mlServices: { mlApiServices },
       lens,
@@ -45,7 +45,7 @@ const PageWrapper: FC<PageProps> = ({ location }) => {
   const { context } = useRouteResolver('full', ['canCreateJob'], {
     redirect: () =>
       resolver(
-        { lens, mlApiServices, timeFilter, kibanaConfig, share, contentManagement },
+        { lens, mlApiServices, timeFilter, kibanaConfig, dashboardService, contentManagement },
         lensId,
         vis,
         from,

@@ -10,7 +10,7 @@ import type { Query } from '@kbn/es-query';
 import type { Filter } from '@kbn/es-query';
 import type { IUiSettingsClient } from '@kbn/core-ui-settings-browser';
 import type { TimefilterContract } from '@kbn/data-plugin/public';
-import type { SharePluginStart } from '@kbn/share-plugin/public';
+import type { DashboardStart } from '@kbn/dashboard-plugin/public';
 import type { MlApiServices } from '../../../services/ml_api_service';
 import { QuickGeoJobCreator } from './quick_create_job';
 
@@ -20,12 +20,12 @@ export async function resolver(
   {
     kibanaConfig,
     timeFilter,
-    share,
+    dashboardService,
     mlApiServices,
   }: {
     kibanaConfig: IUiSettingsClient;
     timeFilter: TimefilterContract;
-    share: SharePluginStart;
+    dashboardService: DashboardStart;
     mlApiServices: MlApiServices;
   },
   dashboard: string,
@@ -88,7 +88,12 @@ export async function resolver(
     to = '';
   }
 
-  const jobCreator = new QuickGeoJobCreator(kibanaConfig, timeFilter, share, mlApiServices);
+  const jobCreator = new QuickGeoJobCreator(
+    kibanaConfig,
+    timeFilter,
+    dashboardService,
+    mlApiServices
+  );
 
   await jobCreator.createAndStashGeoJob(
     dvId,
